@@ -1,14 +1,6 @@
-import { useState, useEffect } from 'react';
-import {
-  Routes,
-  Route,
-  Link,
-  useParams,
-  Outlet,
-  useNavigate,
-} from 'react-router-dom';
+import { useState, useEffect, Suspense } from 'react';
+import { Link, useParams, Outlet, useNavigate } from 'react-router-dom';
 import * as moviesAPI from '../../services/movies-api';
-import Cast from '../Cast/Cast';
 import styles from './MovieDetails.module.css';
 
 export default function MovieDetails() {
@@ -59,12 +51,11 @@ export default function MovieDetails() {
               </li>
             </ul>
           </div>
-          <Outlet />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Outlet />
+          </Suspense>
         </>
       )}
-      <Routes>
-        <Route path={`/movies/:movieId/*`} element={<Cast />} />
-      </Routes>
     </div>
   );
 }

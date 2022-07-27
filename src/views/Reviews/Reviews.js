@@ -9,20 +9,22 @@ export default function Reviews() {
   useEffect(() => {
     moviesAPI.fetchReviewsById(movieId).then(setReviews);
   }, [movieId]);
+
+  const createItemsMarkup = reviews =>
+    reviews.map(({ id, author, content }) => (
+      <li key={id}>
+        <p className={styles.author}>{author}</p>
+        <p>{content}</p>
+      </li>
+    ));
+
   return (
     <div>
-      <ul>
-        {reviews.length > 0 ? (
-          reviews.map(({ id, author, content }) => (
-            <li key={id}>
-              <p className={styles.author}>{author}</p>
-              <p>{content}</p>
-            </li>
-          ))
-        ) : (
-          <p>We don't have any reviews for this movie.</p>
-        )}
-      </ul>
+      {reviews.length > 0 ? (
+        <ul>{createItemsMarkup(reviews)}</ul>
+      ) : (
+        <p>We don't have any reviews for this movie.</p>
+      )}
     </div>
   );
 }

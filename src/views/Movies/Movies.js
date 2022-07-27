@@ -10,11 +10,10 @@ export default function MoviesView() {
 
   useEffect(() => {
     if (searchParams.get('query')) {
-      moviesAPI
-        .fetchMoviesBySearchQuery(searchParams.get('query'))
-        .then(setMovies);
+      setSearchValue(searchParams.get('query'));
+      moviesAPI.fetchMoviesBySearchQuery(searchValue).then(setMovies);
     }
-  }, [searchParams]);
+  }, [searchParams, searchValue]);
 
   const handleSearchValueChange = event => {
     setSearchValue(event.currentTarget.value.toLowerCase());
